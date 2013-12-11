@@ -1,3 +1,4 @@
 *.un~
 *.sw*
 .DS_Store
+/node_modules/

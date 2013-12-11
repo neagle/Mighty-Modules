@@ -1,4 +1,5 @@
 <?php
+    date_default_timezone_set('America/New_York');
 
     $url = "https://github.com/artzstudio/Mighty-Modules/commits/master.atom";
     $ch = curl_init($url);
@@ -120,7 +121,7 @@
 
     <div class="commits">
     <h2>Recent Code Updates</h2>
-<?
+<?php
     $day = '';
     foreach ($commits as $commit) {
 

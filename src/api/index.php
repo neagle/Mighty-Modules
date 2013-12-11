@@ -1,5 +1,10 @@
 <?php
 
+// Turn on short tags
+ini_set('short_open_tag', 1);
+
+phpinfo();
+
 // Exit if there are no parameters.
 if (!$_SERVER['QUERY_STRING']) {
     exit;

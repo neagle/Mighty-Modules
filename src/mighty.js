@@ -2874,6 +2874,7 @@
     host: location.hostname,
     live: true,
     cache: 30,
-//    basePath: "http://localhost/mighty/src/" // Development path
-    basePath: "http://mighty.aol.net/" // Production path
+    basePath: "/" // Development path
+    //basePath: "http://localhost/mighty/src/" // Development path
+    //basePath: "http://mighty.aol.net/" // Production path
 }));
