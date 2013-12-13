@@ -14,6 +14,103 @@ module.exports = function (grunt) {
 			'* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
 			' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 		// Task configuration.
+		copy: {
+			dev: {
+				expand: true,
+				cwd: 'src/',
+				src: [
+					'**',
+					// Exclude folders that are built/compiled separately
+					'!images/**',
+					'!scss/**',
+					'!mighty/**'
+				],
+				dest: 'dev/'
+			},
+			mighty: {
+				expand: true,
+				cwd: 'src/mighty',
+				src: [
+					'**/*'
+				],
+				dest: 'dev/mighty/'
+			},
+			prod: {
+				expand: true,
+				cwd: 'src/',
+				src: [
+					'**',
+					// Exclude folders that are built/compiled separately
+					'!images/**',
+					'!scss/**'
+				],
+				dest: 'prod/'
+			}
+		},
+		// Minify .png, .jpg, and .gif files and place optimized versions in
+		// build directories
+		imagemin: {
+			dev: {
+				files: [{
+					expand: true,
+					cwd: 'src/images',
+					src: ['**/*.{png,jpg,gif}'],
+					dest: 'dev/images'
+				}]
+			},
+			prod: {
+				files: [{
+					expand: true,
+					cwd: 'src/images',
+					src: ['**/*.{png,jpg,gif}'],
+					dest: 'prod/images'
+				}]
+			}
+		},
+
+		// Compile SCSS files to CSS
+		sass: {
+			dev: {
+				files: {
+					'dev/css/style.css': 'src/scss/style.scss'
+				}
+			},
+			prod: {
+				files: {
+					'prod/css/style.css': 'src/scss/style.scss'
+				}
+			}
+		},
+
+		replace: {
+			dev: {
+				options: {
+					patterns: [{
+						match: 'basePath',
+						replacement: '/',
+						expression: false
+					}],
+					force: true
+				},
+				files: [
+					{ src: ['dev/mighty.js'], dest: './' }
+				]
+			},
+			prod: {
+				options: {
+					patterns: [{
+						match: 'basePath',
+						replacement: 'http://mighty.aol.net/',
+						expression: false
+					}],
+					force: true
+				},
+				files: [
+					{ src: ['prod/mighty.js'], dest: './' }
+				]
+			}
+		},
+
 		concat: {
 			options: {
 				banner: '<%= banner %>',
@@ -40,8 +137,13 @@ module.exports = function (grunt) {
 			gruntfile: {
 				src: 'Gruntfile.js'
 			},
-			lib_test: {
-				src: ['lib/**/*.js', 'test/**/*.js']
+			js: {
+				src: [
+					'src/**/**.*.js',
+					// Never check minified files
+					// (Though what are they doing there, anyway?)
+					'!src/**/**.min.js'
+				]
 			}
 		},
 		watch: {
@@ -49,23 +151,56 @@ module.exports = function (grunt) {
 				files: '<%= jshint.gruntfile.src %>',
 				tasks: ['jshint:gruntfile']
 			},
-			lib_test: {
-				files: '<%= jshint.lib_test.src %>',
-				tasks: ['jshint:lib_test', 'nodeunit']
+			sass: {
+				files: ['src/scss/**/*.scss'],
+				tasks: ['sass:dev']
+			},
+			images: {
+				files: ['src/images/**/*'],
+				tasks: ['imagemin:dev']
+			},
+			mighty: {
+				files: ['src/mighty/**/*'],
+				tasks: ['copy:mighty']
+			},
+			miscFiles: {
+				files: [
+					'src/**/*',
+					'!src/scss/**',
+					'!src/images/**',
+					'!src/mighty/**'
+				],
+				tasks: ['copy:dev']
+			},
+			filesWithVars: {
+				files: [
+					'src/mighty.js'
+				],
+				tasks: ['replace:dev']
 			}
 		},
 		php: {
-			src: {
+			dev: {
 				options: {
-					keepalive: true,
-					base: './src'
+					base: './dev'
 				}
 			}
+		},
+
+		clean: {
+			options: {
+				// Output what this task would do without actually deleting anything.
+				// Vital for debugging.
+				//'no-write': true
+			},
+			builds: ['dev/**/*', 'prod/**/*']
 		}
 	});
 
 	// Default task.
-	//grunt.registerTask('default', ['jshint', 'nodeunit', 'concat', 'uglify']);
-	grunt.registerTask('default', []);
+	grunt.registerTask('default', ['imagemin:dev', 'sass:dev', 'copy:dev', 'copy:mighty', 'replace:dev']);
+	grunt.registerTask('prod', ['imagemin:prod', 'sass:prod', 'copy:prod', 'replace:prod']);
+
+	grunt.registerTask('watch-serve', ['default', 'php', 'watch']);
 
 };

@@ -2874,7 +2874,7 @@
     host: location.hostname,
     live: true,
     cache: 30,
-    basePath: "@@basePath"
+    basePath: "/"
     //basePath: "/" // Development path
     //basePath: "http://mighty.aol.net/" // Production path
 }));
