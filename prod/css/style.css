@@ -1,0 +1,192 @@
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, smbackground-color, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none; }
+
+/* remember to define focus styles! */
+:focus {
+  outline: 0; }
+
+/* remember to highlight inserts somehow! */
+ins {
+  text-decoration: none; }
+
+del {
+  text-decoration: line-through; }
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* MIGHTY MODULES */
+body {
+  font-size: 16px;
+  font-family: helvetica, arial;
+  line-height: 24px;
+  margin: 24px;
+  color: #333333; }
+
+.header > h1 {
+  width: 324px;
+  height: 185px;
+  overflow: hidden;
+  cursor: pointer; }
+
+.chooser {
+  margin-top: 24px;
+  margin-right: 24px;
+  margin-bottom: 104px;
+  width: 288px;
+  float: left; }
+
+.chooser > h2 {
+  font-size: 22px;
+  margin-bottom: 24px; }
+
+.chooser > ul > li {
+  border-bottom: 1px solid #cccccc; }
+
+.chooser > ul > li:first-child {
+  border-top: 1px solid #cccccc; }
+
+.chooser > ul > li > a {
+  font-size: 16px;
+  line-height: 16px;
+  padding: 10px 24px 9px;
+  display: block;
+  text-decoration: none;
+  color: #fe5f35;
+  background-color: white;
+  -webkit-transition: background-color 0.3s ease-out;
+  -moz-transition: background-color 0.3s ease-out;
+  transition: background-color 0.3s ease-out; }
+
+.chooser > ul > li > a:hover, .chooser > ul > li > a.active {
+  background-color: #f1f1f1; }
+
+.factory {
+  float: left;
+  margin-top: -72px;
+  width: 600px; }
+
+.factory > h1 {
+  font-size: 24px;
+  margin-bottom: 12px; }
+
+.factory > .widgets {
+  margin-top: 24px; }
+
+.factory > .widgets > li {
+  border-left: 6px solid white;
+  padding: 12px 24px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
+
+.factory > .widgets > li:hover {
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  background-color: #f1f1f1;
+  border-left: 6px solid #e74612;
+  cursor: pointer; }
+
+.factory > .widgets > li > h3 {
+  font-size: 19px; }
+
+.widgets {
+  margin-bottom: 24px; }
+
+/* Inherited styles for maker preview. */
+.maker-widget a {
+  text-decoration: none; }
+
+.maker-widget h2 {
+  font-size: 20px; }
+
+/* Widget specific styles */
+.maker-widget .mighty-mostpopular a {
+  color: black; }
+
+.maker-widget .mighty-mostpopular a:hover, .maker-widget .mighty-mostpopular .show-more {
+  color: #1d61f2; }
+
+.maker-widget .mighty-mostpopular .show-more {
+  font-size: 14px;
+  font-weight: bold; }
+
+.maker-widget .mighty-mostpopular .show-more:hover {
+  text-decoration: underline; }
+
+.commits > h2 {
+  font-size: 22px; }
+
+.commits > h3 {
+  font-size: 18px;
+  margin-top: 24px; }
+
+.commits > ul {
+  font-size: 13px;
+  line-height: 18px; }
+
+.commits > ul > li {
+  padding-top: 12px; }
+
+.commits a {
+  text-decoration: none;
+  color: inherit; }
+
+.commits a:hover {
+  text-decoration: underline;
+  color: #fe5f35; }
+
+.commits > ul > li > a {
+  display: block;
+  font-weight: bold; }
+
+.commits > ul > li > i {
+  display: block;
+  font-size: 12px;
+  font-style: normal; }
+
+.commits > p {
+  margin-top: 24px; }
+
+@media all and (min-width: 1400px) {
+  .factory {
+    position: relative; }
+  .factory > .commits {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 624px;
+    width: 300px; }
+  .factory > .mighty-maker {
+    position: relative; }
+  .factory > .mighty-maker > .maker-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 624px;
+    width: 300px; }
+  .factory > .mighty-maker > .maker-preview > label {
+    display: none; } }
