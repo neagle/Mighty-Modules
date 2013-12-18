@@ -339,10 +339,11 @@
         var timeout;
 
         return function () {
+            var context = this, args = arguments;
 
             function throttler() {
                 timeout = undefined;
-                func.call(this);
+                func.apply(context, args);
             }
 
             if (debounce) {

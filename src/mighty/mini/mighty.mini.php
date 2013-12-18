@@ -16,13 +16,22 @@ date_default_timezone_set('UTC');
 if (isset($options->heading)): $heading = '<h2>' . $options->heading . '</h2>'; endif;
 if (isset($options->sub_heading)): $sub_heading = '<h3>' . $options->sub_heading . '</h3>'; endif;
 
-// Set up sorting.
-$sort = '';
-if (isset($options->sort) && $options->sort === 'viral'): $sort = '&viral_sort=1'; endif;
+if (!isset($options->limit)) {
+	$options->limit = '20';
+}
 
 // Call API
 $Mighty = new Mighty();
-$json = $Mighty->getJSON('http://qa.mini.aol.com/api/1.0/cards');
+
+$path = 'http://qa.mini.aol.com/api/1.0/cards?limit=' . $options->limit;
+if (isset($options->continuation)) {
+	$path .= '&continuation=' . $options->continuation;
+} else {
+	// Set an initial continuation key for debugging
+	//$path .= '&continuation=' . '5283de1c25df6';
+}
+
+$json = $Mighty->getJSON($path);
 
 if (isset($json)):
 
@@ -31,7 +40,7 @@ if (isset($json)):
 if (count($cards) > 0):
 ?>
 <div class="mighty-mini">
-		<div class="cards-list">
+	<div class="cards-list" data-continuation="<?=$json->data->continuation?>">
 		<?=@$heading?>
 		<?=@$sub_heading?>
 
@@ -96,7 +105,7 @@ if (count($cards) > 0):
 			</p>
 
 		</article>
-		<?  endforeach; ?>
+		<? endforeach; ?>
 
 		</div>
 </div>
