@@ -47,6 +47,12 @@ if (isset($json)):
 	$now = date_create();
 	$diff = date_diff($updated, $now);
 	$ago = $diff->format("%h") . "h";
+
+	$text = preg_replace(
+		"#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie",
+		"'<a href=\"$1\" target=\"_blank\">$3</a>$4'",
+		$card->content->text
+	);
 ?>
 	<article class="card card-list <?=$type_class?>">
 
@@ -73,8 +79,11 @@ if (isset($json)):
 		<h4 class="card-state card-state-<?=$card->state?>"><?=ucfirst($card->state)?></h4>
 		<? } ?>
 
-		<h2 class="headline"><?=$card->content->text?></h2>
+		<h2 class="headline"><?=@$text?></h2>
+
+		<? if (!empty($card->content->comment)) { ?>
 		<p class="card-comment"><?=$card->content->comment?></p>
+		<? } ?>
 
 		<p class="card-meta">
 			<span class="card-icon pull-left">

@@ -8,12 +8,13 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 		// These options will be used as defaults
 		options: {
-		// These selectors will automatically run inside
-		// the module and grab the resulting elements.
+			moreCount: 0,
+
+			// These selectors will automatically run inside
+			// the module and grab the resulting elements.
 			ui: {
 				cardsList: '.cards-list',
 				articles: 'article'
-				//'photos': 'img'
 			}
 		},
 
@@ -37,7 +38,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				var continuation = ui.cardsList.getAttribute('data-continuation');
 				var path = Mighty.option('basePath') +
 					'api/?_host=' + location.hostname +
-					'&more_count=' + options.more_count +
+					'&more_count=' + options.moreCount +
 					'&_module=mighty.mini&continuation=' +
 					continuation +
 					'&_jsonp=?';
@@ -76,7 +77,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				}
 			};
 
-			if (options.more_count !== '0') {
+			if (options.moreCount !== '0') {
 				core.bind(element, 'scroll', core.throttle(addNewCards, 100));
 			}
 		}
