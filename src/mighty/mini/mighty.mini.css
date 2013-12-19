@@ -1,19 +1,20 @@
 .mighty-mini {
+<<<<<<< HEAD
 	height: 400px;
 	overflow: scroll;
 	position: relative;
+  border: solid 1px #cecece;
 }
 
 .card {
   border: solid 1px #cecece;
-  margin: 10px;
   background: #fff;
   color: #666;
   position: relative;
   overflow: hidden;
 }
 .card.card-list {
-  width: 300px;
+  width: 298px;
   float: left;
   cursor: pointer;
   -webkit-transition: box-shadow 0.2s linear, border-color 0.2s linear;
