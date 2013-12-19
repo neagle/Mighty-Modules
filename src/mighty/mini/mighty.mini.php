@@ -17,7 +17,7 @@ if (isset($options->heading)): $heading = '<h2>' . $options->heading . '</h2>'; 
 if (isset($options->sub_heading)): $sub_heading = '<h3>' . $options->sub_heading . '</h3>'; endif;
 
 if (!isset($options->limit)) {
-	$options->limit = '20';
+	$options->limit = '2';
 }
 
 // Call API
@@ -84,7 +84,9 @@ if (count($cards) > 0):
 			<? } ?>
 
 			<h2 class="headline"><?=$card->content->text?></h2>
+			<? if (!empty($card->content->comment)) { ?>
 			<p class="card-comment"><?=$card->content->comment?></p>
+			<? } ?>
 
 			<p class="card-meta">
 				<span class="card-icon pull-left">
