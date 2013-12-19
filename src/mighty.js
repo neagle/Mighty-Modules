@@ -1831,6 +1831,24 @@
     }
     global.query = query;
 
+    function closest(elem, selector) {
+
+      var matchesSelector = elem.matches
+        || elem.webkitMatchesSelector
+        || elem.mozMatchesSelector
+        || elem.msMatchesSelector;
+
+      while (elem) {
+        if (matchesSelector.bind(elem)(selector)) {
+          return elem;
+        } else {
+          elem = elem.parentNode;
+        }
+      }
+      return false;
+    }
+    global.closest = closest;
+
 
 /*
     Simple add/remove classname functions.
@@ -2654,6 +2672,7 @@
         require: require,
 
         query: query,
+        closest: closest,
 
         addClass: addClass,
         removeClass: removeClass,

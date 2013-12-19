@@ -339,7 +339,10 @@
         var timeout;
 
         return function () {
-            var context = this, args = arguments;
+            var context = this;
+            var args = arguments;
+
+          var args = arguments;
 
             function throttler() {
                 timeout = undefined;
@@ -1828,6 +1831,24 @@
     }
     global.query = query;
 
+    function closest(elem, selector) {
+
+      var matchesSelector = elem.matches
+        || elem.webkitMatchesSelector
+        || elem.mozMatchesSelector
+        || elem.msMatchesSelector;
+
+      while (elem) {
+        if (matchesSelector.bind(elem)(selector)) {
+          return elem;
+        } else {
+          elem = elem.parentNode;
+        }
+      }
+      return false;
+    }
+    global.closest = closest;
+
 
 /*
     Simple add/remove classname functions.
@@ -2651,6 +2672,7 @@
         require: require,
 
         query: query,
+        closest: closest,
 
         addClass: addClass,
         removeClass: removeClass,
@@ -2722,7 +2744,7 @@
                             // Remember we initialized this widget already.
                             mightyAnchor.widget = true;
 
-                            var className = mightyAnchor.className,
+                            var className = mightyAnchor.className.match(/mighty-[a-z0-9]+/)[0],
                                 widgetName = className.replace(/-/g, "."),
                                 mightyAnchorParent = mightyAnchor.parentNode,
                                 mightyModule,
@@ -2738,6 +2760,7 @@
 
                                 optionParams;
 
+
                             // If the element's parent has the same class name
                             // as the Mighty Anchor, we already have the HTML and
                             // do not need to swap in the <div>.
@@ -2747,9 +2770,6 @@
 
                                 // Set the elem to the parent.
                                 mightyModule = mightyAnchorParent;
-
-                                // This is indeed a mighty module!
-                                core.addClass(mightyModule, "mighty-module");
 
                                 // Add our mighty-loading class, indicating the module
                                 // is in the process of being initialized.
@@ -2769,8 +2789,7 @@
                                 }
                                 // Ajax in the module's content.
                                 // Make this configurable, or a function of the module eventually.
-                                core.getJSONP(Mighty.option("basePath") + "api/?_host=" +
-                                    Mighty.option("host") + "&_cache=" + (Mighty.option("cache") || 60) +
+                                core.getJSONP(Mighty.option("basePath") + "api/?_host=" + Mighty.option("host") +
                                     "&_module=" + widgetName + optionParams + "&_jsonp=?", function (data) {
 
                                         if (!data.error) {

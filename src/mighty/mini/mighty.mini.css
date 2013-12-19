@@ -5,6 +5,21 @@
   border: solid 1px #cecece;
 }
 
+.mighty-mini .pull-left {
+	float: left;
+}
+
+.mighty-mini .card-meta-share {
+	font-size: 10px;
+	margin: 10px;
+}
+
+.mighty-mini .share {
+	cursor: pointer;
+	display: inline-block;
+	margin-right: 5px;
+}
+
 .mighty-mini:before,
 .mighty-mini:after {
 	content: " "; /* 1 */
