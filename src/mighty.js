@@ -342,8 +342,6 @@
             var context = this;
             var args = arguments;
 
-          var args = arguments;
-
             function throttler() {
                 timeout = undefined;
                 func.apply(context, args);

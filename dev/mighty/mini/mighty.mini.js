@@ -8,7 +8,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 		// These options will be used as defaults
 		options: {
-			moreCount: 0,
+			more_count: 0,
 
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.
@@ -54,7 +54,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				var continuation = ui.cardsList.getAttribute('data-continuation');
 				var path = Mighty.option('basePath') +
 					'api/?_host=' + location.hostname +
-					'&more_count=' + options.moreCount +
+					'&more_count=' + options.more_count +
 					'&_module=mighty.mini&continuation=' +
 					continuation +
 					'&_jsonp=?';
@@ -93,7 +93,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				}
 			};
 
-			if (options.moreCount !== '0') {
+			if (options.more_count !== '0') {
 				core.bind(element, 'scroll', core.throttle(addNewCards, 100));
 			}
 
