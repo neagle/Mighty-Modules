@@ -14,7 +14,6 @@ body .mighty-realtime{
 .mighty-realtime .mighty-realtime-li {
     margin: 5px;
     overflow: hidden;
-    -moz-transition: margin-left .5s ease;
     -webkit-transition: margin-left .5s ease;
     transition: margin-left .5s ease;
 }

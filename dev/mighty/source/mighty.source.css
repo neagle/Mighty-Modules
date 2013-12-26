@@ -10,9 +10,6 @@
 	background-color: #333333;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), to(#8d8d8d)); 
 	background-image: -webkit-linear-gradient(top, #333333, #8d8d8d); 
-	background-image:    -moz-linear-gradient(top, #333333, #8d8d8d); 
-	background-image:     -ms-linear-gradient(top, #333333, #8d8d8d); 
-	background-image:      -o-linear-gradient(top, #333333, #8d8d8d); 
 	background-image:         linear-gradient(top, #333333, #8d8d8d);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#333333', EndColorStr='#8d8d8d'); 
 
@@ -31,9 +28,6 @@
 */
 .mighty-tabs {
   -webkit-transition: height 0.3s ease-out;  
-     -moz-transition: height 0.3s ease-out;  
-      -ms-transition: height 0.3s ease-out;  
-       -o-transition: height 0.3s ease-out;  
           transition: height 0.3s ease-out;  
 }
 .mighty-tabs > .tabs {
@@ -63,9 +57,6 @@
 	background-color: #ffffff;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3ffab)); 
 	background-image: -webkit-linear-gradient(top, #ffffff, #e3ffab); 
-	background-image:    -moz-linear-gradient(top, #ffffff, #e3ffab); 
-	background-image:     -ms-linear-gradient(top, #ffffff, #e3ffab); 
-	background-image:      -o-linear-gradient(top, #ffffff, #e3ffab); 
 	background-image:         linear-gradient(top, #ffffff, #e3ffab);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#e3ffab'); 
 }

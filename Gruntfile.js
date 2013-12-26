@@ -111,6 +111,15 @@ module.exports = function (grunt) {
 			}
 		},
 
+		autoprefixer: {
+			dev: {
+				src: 'dev/**/*.css'
+			},
+			prod: {
+				src: 'prod/**/*.css'
+			}
+		},
+
 		concat: {
 			options: {
 				banner: '<%= banner %>',
@@ -177,6 +186,15 @@ module.exports = function (grunt) {
 					'src/mighty.js'
 				],
 				tasks: ['replace:dev']
+			},
+			css: {
+				files: [
+					'dev/**/*.css'
+				],
+				tasks: ['autoprefixer:dev'],
+				options: {
+					debounceDelay: 5000
+				}
 			}
 		},
 		php: {

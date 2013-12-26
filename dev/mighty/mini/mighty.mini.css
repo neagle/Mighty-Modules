@@ -1,8 +1,114 @@
+@-webkit-keyframes mighty-highlight {
+	from {
+		background-color: hsla(60, 100%, 70%, 0.3);
+	}
+
+	to {
+	}
+}
+
+@keyframes mighty-highlight {
+	from {
+		background-color: hsla(60, 100%, 70%, 0.3);
+	}
+
+	to {
+	}
+}
+
+@-webkit-keyframes mighty-spin {
+	from {
+		-webkit-transform: rotate(0turn);
+		transform: rotate(0turn);
+	}
+
+	to {
+		-webkit-transform: rotate(1turn);
+		transform: rotate(1turn);
+	}
+}
+
+@keyframes mighty-spin {
+	from {
+		-webkit-transform: rotate(0turn);
+		-ms-transform: rotate(0turn);
+		transform: rotate(0turn);
+	}
+
+	to {
+		-webkit-transform: rotate(1turn);
+		-ms-transform: rotate(1turn);
+		transform: rotate(1turn);
+	}
+}
+
 .mighty-mini {
 	/*height: 400px;*/
 	/*overflow: scroll;*/
+	/*border: solid 1px #cecece;*/
 	position: relative;
-  border: solid 1px #cecece;
+}
+
+.mighty-mini .reload {
+	background-color: transparent;
+	background-color: white;
+	border-radius: 50%;
+	border: 2px solid #2b98ce;
+	cursor: pointer;
+	display: block;
+	height: 16px;
+	position: relative;
+	width: 16px;
+}
+
+.mighty-mini .reload.loading {
+	-webkit-animation-name: mighty-spin;
+	animation-name: mighty-spin;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+}
+
+.mighty-mini .reload:before {
+	border-color: transparent transparent white transparent;
+	border-style: solid;
+	border-width: 0 0 8px 7px;
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	position: absolute;
+	right: -2px;
+	top: 0;
+}
+
+.mighty-mini .reload:after {
+	border-color: transparent transparent #2b98ce transparent;
+	border-style: solid;
+	border-width: 0 0 6px 6px;
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	position: absolute;
+	right: -2px;
+	top: 0;
+}
+
+.mighty-mini .cards-list {
+	overflow: hidden;
+}
+
+.mighty-mini .cards-list.highlight .card {
+	-webkit-animation-name: mighty-highlight;
+	animation-name: mighty-highlight;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
 }
 
 .mighty-mini .pull-left {
@@ -31,7 +137,7 @@
 }
 
 .card {
-	margin: 10px;
+  margin: 10px 0;
   border: solid 1px #cecece;
   background: #fff;
   color: #666;
@@ -41,7 +147,7 @@
 .card.card-list {
   width: 298px;
   float: left;
-  -webkit-transition: box-shadow 0.2s linear, border-color 0.2s linear;
+  -webkit-transition: -webkit-box-shadow 0.2s linear, border-color 0.2s linear;
   transition: box-shadow 0.2s linear, border-color 0.2s linear;
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
@@ -51,6 +157,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-color: #b5b5b5;
 }
+
 .card.card-admin {
   cursor: pointer;
 }
@@ -198,6 +305,7 @@
 .card .card-image,
 .card .card-video-poster {
   height: 200px;
+  -webkit-background-size: cover;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;

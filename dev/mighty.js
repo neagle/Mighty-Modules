@@ -339,8 +339,8 @@
         var timeout;
 
         return function () {
-            var context = this;
-            var args = arguments;
+          var context = this;
+          var args = arguments;
 
             function throttler() {
                 timeout = undefined;

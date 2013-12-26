@@ -339,14 +339,8 @@
         var timeout;
 
         return function () {
-<<<<<<< HEAD
-            var context = this;
-            var args = arguments;
-=======
-
           var context = this;
           var args = arguments;
->>>>>>> upstream/master
 
             function throttler() {
                 timeout = undefined;

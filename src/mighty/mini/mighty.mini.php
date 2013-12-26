@@ -36,6 +36,12 @@ if (isset($json)):
 
 	if (count($cards) > 0):
 ?>
+
+<div class="mini-header">
+	<h1><?=ucfirst($cards[0]->brand)?> Mini</h1>
+	<span class="reload"></span>
+</div>
+
 <div class="cards-list"
 	data-continuation="<?=$json->data->continuation?>"
 >
