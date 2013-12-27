@@ -35,13 +35,11 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			ui.cardsList = ui.cardsList[0];
 
 			function renderVideo(video) {
-				console.log('VIDEO', video);
 				var embedCode = getEmbedCode({
 					contentSource: video.getAttribute('data-content-source'),
 					url: video.getAttribute('data-url')
 				});
 
-				console.log('embed code:', embedCode);
 				var videoHTML = core.createHTML('<' + embedCode.type +
 					' src="' + embedCode.src + '"><' + embedCode.type + '>');
 
@@ -49,13 +47,9 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				video.parentNode.removeChild(video);
 			}
 
-			//console.log('vids?', ui.videos);
 			for (var i = 0, length = ui.videos.length; i < length; i += 1) {
 				renderVideo(ui.videos[i]);
 			}
-
-			// console.log(ui.cardsList);
-			// console.log('create', ui.cardsList.getAttribute('data-continuation'));
 
 			var getCardData = function (card) {
 				var attributes = card.attributes;
