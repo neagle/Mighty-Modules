@@ -77,7 +77,6 @@ body {
   color: #fe5f35;
   background-color: white;
   -webkit-transition: background-color 0.3s ease-out;
-  -moz-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out; }
 
 .chooser > ul > li > a:hover, .chooser > ul > li > a.active {
@@ -99,12 +98,10 @@ body {
   border-left: 6px solid white;
   padding: 12px 24px;
   -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out; }
 
 .factory > .widgets > li:hover {
   -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
   background-color: #f1f1f1;
   border-left: 6px solid #e74612;

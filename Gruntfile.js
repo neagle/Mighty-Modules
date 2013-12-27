@@ -216,8 +216,9 @@ module.exports = function (grunt) {
 	});
 
 	// Default task.
-	grunt.registerTask('default', ['imagemin:dev', 'sass:dev', 'copy:dev', 'copy:mighty', 'replace:dev']);
-	grunt.registerTask('prod', ['imagemin:prod', 'sass:prod', 'copy:prod', 'replace:prod']);
+	grunt.registerTask('default', ['imagemin:dev', 'sass:dev', 'copy:dev', 'copy:mighty', 'autoprefixer:dev',
+		'replace:dev']);
+	grunt.registerTask('prod', ['imagemin:prod', 'sass:prod', 'copy:prod', 'autoprefixer:prod', 'replace:prod']);
 
 	grunt.registerTask('watch-serve', ['default', 'php', 'watch']);
 

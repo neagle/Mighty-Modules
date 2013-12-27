@@ -8,11 +8,13 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 		// These options will be used as defaults
 		options: {
-			moreCount: 0,
+			more_count: 0,
+			autoRefresh: true,
 
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.
 			ui: {
+				reload: '.reload',
 				cardsList: '.cards-list',
 				articles: 'article',
 				shareLinks: '.share'
@@ -26,8 +28,6 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			var options = self.options;
 			var ui = self.ui;
 			var element = self.element;
-			var loading = false;
-			var ended = false;
 
 			ui.cardsList = ui.cardsList[0];
 
@@ -49,52 +49,127 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				return data;
 			};
 
-			var addNewCards = function (event) {
-				// console.log(event);
-				var continuation = ui.cardsList.getAttribute('data-continuation');
+			var getCards = function (event, highlight) {
 				var path = Mighty.option('basePath') +
 					'api/?_host=' + location.hostname +
-					'&more_count=' + options.moreCount +
-					'&_module=mighty.mini&continuation=' +
-					continuation +
+					'&count=' + options.count +
+					'&more_count=' + options.more_count +
+					'&_module=mighty.mini' +
 					'&_jsonp=?';
 
-				// Use the fanciest word available for fifth-from-last
-				var ultrapreantepenultimate = ui.cardsList.children[ui.cardsList.children.length - 5];
+				highlight = highlight || false;
 
-				if (event.target.scrollTop >= ultrapreantepenultimate.offsetTop && !loading && !ended) {
-					loading = true;
-					core.getJSONP(path, function (html) {
-						if (html) {
-							// Turn string of html into parsed html
-							html = core.createHTML(html);
-							var newCardsList = core.query('.cards-list', html)[0];
-							if (newCardsList) {
-								var newContinuation = newCardsList.getAttribute('data-continuation');
+				ui.reload[0].className += ' loading';
 
-								// Set the new continuation key
-								ui.cardsList.setAttribute('data-continuation', newContinuation);
+				core.getJSONP(path, function (html) {
+					ui.reload[0].className = ui.reload[0].className.replace(' loading', ' ');
 
-								// console.log('first child?', newCardsList.firstChild.length, (newCardsList.firstChild.length) ? true : false);
-
-								// Add the new cards
-								while (newCardsList.firstChild) {
-									// console.log('adding child', newCardsList.firstChild);
-									ui.cardsList.appendChild(newCardsList.firstChild);
-									// console.log(newCardsList.children.length);
-								}
-							}
-						} else {
-							ended = true;
+					if (html) {
+						if (highlight) {
+							ui.cardsList.className += ' highlight';
+							setTimeout(function () {
+								ui.cardsList.className = ui.cardsList.className.replace(' highlight', '');
+							}, 1000);
 						}
-
-						loading = false;
-					});
-				}
+						// Turn string of html into parsed html
+						html = core.createHTML(html);
+						var newCardsList = core.query('.cards-list', html)[0];
+						if (newCardsList) {
+							ui.cardsList.innerHTML = '';
+							// Add the new cards
+							while (newCardsList.firstChild) {
+								ui.cardsList.appendChild(newCardsList.firstChild);
+							}
+						}
+					}
+				});
 			};
 
-			if (options.moreCount !== '0') {
-				core.bind(element, 'scroll', core.throttle(addNewCards, 100));
+			function getEmbedUrl(video) {
+				var id = null;
+
+				switch (video.content_source) {
+				case 'youtube':
+					id = video.url.match(/v=([^&]+)/);
+					if (id && id[1]) {
+						return {
+							type: 'iframe',
+							src: '//www.youtube.com/embed/' + id[1] + '?modestbranding=1',
+							source: 'youtube'
+						};
+					}
+					break;
+				case 'vimeo':
+					id = video.url.match(/vimeo.com\/(\d+)/);
+					if (id && id[1]) {
+						return {
+							type: 'iframe',
+							src: '//player.vimeo.com/video/' + id[1] + '?badge=0&byline=0&color=#27ae60',
+							source: 'vimeo'
+						};
+					}
+					break;
+				case 'aol_on':
+					id = video.url.match(/-(\d+)\??.*$/);
+					if (id && id[1]) {
+						var w = 438, h = 260;
+						if ($(window).width() < 560) {
+							w = 298;
+							h = 200;
+						}
+						return {
+							type: 'script',
+							src: 'http://pshared.5min.com/Scripts/PlayerSeed.js?sid=281&width=' +
+								w + '&height=' + h + '&playList=' + id[1],
+							source: 'aol-on'
+
+						};
+					}
+					break;
+				case 'daily_motion':
+					id = video.url.match(/dailymotion.com\/video\/([^_]+)/);
+					if (id && id[1]) {
+						return {
+							type: 'iframe',
+							src: '//www.dailymotion.com/embed/video/' +
+								id[1] + '?highlight=#27ae60&logo=0',
+							source: 'daily-motion'
+						};
+					}
+					break;
+				case 'instagram':
+					id = video.url.match(/instagram.com\/p\/([^_\/]+)/);
+				if(id && id[1]){
+					return {
+						type: 'iframe',
+						src: '//instagram.com/p/'+ id[1] + "/embed",
+						source: 'instagram'
+
+					}
+				}
+				break;
+				case 'vine':
+					id = video.url.match(/vine.co\/v\/([^_\/]+)/);
+				if(id && id[1]){
+					return {
+						type: 'iframe',
+						src: 'https://vine.co/v/'+ id[1] + "/embed/simple",
+						source: 'vine'
+
+					}
+				}
+				break;
+				}
+				return null;
+
+			};
+
+			core.bind(ui.reload[0], 'click', function (event) {
+				getCards(event, true);
+			});
+
+			if (options.autoRefresh) {
+				setInterval(getCards, 10000);
 			}
 
 			for (var i = 0, length = ui.shareLinks.length; i < length; i += 1) {
