@@ -9,7 +9,9 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 		// These options will be used as defaults
 		options: {
 			more_count: 0,
-			autoRefresh: true,
+			auto_refresh: true,
+			auto_refresh_interval: 60000,
+			on_render: null,
 
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.
@@ -17,7 +19,8 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				reload: '.reload',
 				cardsList: '.cards-list',
 				articles: 'article',
-				shareLinks: '.share'
+				shareLinks: '.share',
+				videos: '.card-video-poster'
 			}
 		},
 
@@ -31,8 +34,22 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 			ui.cardsList = ui.cardsList[0];
 
-			// console.log(ui.cardsList);
-			// console.log('create', ui.cardsList.getAttribute('data-continuation'));
+			function renderVideo(video) {
+				var embedCode = getEmbedCode({
+					contentSource: video.getAttribute('data-content-source'),
+					url: video.getAttribute('data-url')
+				});
+
+				var videoHTML = core.createHTML('<' + embedCode.type +
+					' src="' + embedCode.src + '"><' + embedCode.type + '>');
+
+				video.parentNode.insertBefore(videoHTML, video.nextSibling);
+				video.parentNode.removeChild(video);
+			}
+
+			for (var i = 0, length = ui.videos.length; i < length; i += 1) {
+				renderVideo(ui.videos[i]);
+			}
 
 			var getCardData = function (card) {
 				var attributes = card.attributes;
@@ -73,6 +90,11 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 						}
 						// Turn string of html into parsed html
 						html = core.createHTML(html);
+						var videos = core.query('.card-video-poster', html);
+						for (var i = 0, length = videos.length; i < length; i += 1) {
+							renderVideo(videos[i]);
+						}
+
 						var newCardsList = core.query('.cards-list', html)[0];
 						if (newCardsList) {
 							ui.cardsList.innerHTML = '';
@@ -81,14 +103,18 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 								ui.cardsList.appendChild(newCardsList.firstChild);
 							}
 						}
+						core.publish(element, 'render', element);
+						if (typeof options.onRender === 'function') {
+							options.onRender(element);
+						}
 					}
 				});
 			};
 
-			function getEmbedUrl(video) {
+			function getEmbedCode(video) {
 				var id = null;
 
-				switch (video.content_source) {
+				switch (video.contentSource) {
 				case 'youtube':
 					id = video.url.match(/v=([^&]+)/);
 					if (id && id[1]) {
@@ -139,37 +165,34 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 					break;
 				case 'instagram':
 					id = video.url.match(/instagram.com\/p\/([^_\/]+)/);
-				if(id && id[1]){
-					return {
-						type: 'iframe',
-						src: '//instagram.com/p/'+ id[1] + "/embed",
-						source: 'instagram'
-
+					if (id && id[1]) {
+						return {
+							type: 'iframe',
+							src: '//instagram.com/p/' + id[1] + '/embed',
+							source: 'instagram'
+						};
 					}
-				}
-				break;
+					break;
 				case 'vine':
 					id = video.url.match(/vine.co\/v\/([^_\/]+)/);
-				if(id && id[1]){
-					return {
-						type: 'iframe',
-						src: 'https://vine.co/v/'+ id[1] + "/embed/simple",
-						source: 'vine'
-
+					if (id && id[1]) {
+						return {
+							type: 'iframe',
+							src: 'https://vine.co/v/' + id[1] + '/embed/simple',
+							source: 'vine'
+						};
 					}
-				}
-				break;
+					break;
 				}
 				return null;
-
-			};
+			}
 
 			core.bind(ui.reload[0], 'click', function (event) {
 				getCards(event, true);
 			});
 
 			if (options.autoRefresh) {
-				setInterval(getCards, 10000);
+				setInterval(getCards, options.autoRefreshInterval);
 			}
 
 			for (var i = 0, length = ui.shareLinks.length; i < length; i += 1) {
