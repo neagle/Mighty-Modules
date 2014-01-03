@@ -1831,10 +1831,24 @@
 
     function closest(elem, selector) {
 
+      // http://tanalin.com/en/blog/2012/12/matches-selector-ie8/
+      function matchesSelectorIe8(elem, selector) {
+          var elems = elem.parentNode.querySelectorAll(selector),
+              count = elems.length;
+
+          for (var i = 0; i < count; i++) {
+              if (elems[i] === elem) {
+                  return true;
+              }
+          }
+          return false;
+      }
+
       var matchesSelector = elem.matches
         || elem.webkitMatchesSelector
         || elem.mozMatchesSelector
-        || elem.msMatchesSelector;
+        || elem.msMatchesSelector
+        || matchesSelectorIe8(elem, selector);
 
       while (elem) {
         if (matchesSelector.bind(elem)(selector)) {

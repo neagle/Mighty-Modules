@@ -131,12 +131,13 @@ module.exports = function (grunt) {
 			}
 		},
 		uglify: {
-			options: {
-				banner: '<%= banner %>'
+			dev: {
+				src: 'dev/mighty.js',
+				dest: 'dev/mighty.min.js'
 			},
-			dist: {
-				src: '<%= concat.dist.dest %>',
-				dest: 'dist/<%= pkg.name %>.min.js'
+			prod: {
+				src: 'prod/mighty.js',
+				dest: 'prod/mighty.min.js'
 			}
 		},
 		jshint: {
@@ -216,9 +217,23 @@ module.exports = function (grunt) {
 	});
 
 	// Default task.
-	grunt.registerTask('default', ['imagemin:dev', 'sass:dev', 'copy:dev', 'copy:mighty', 'autoprefixer:dev',
-		'replace:dev']);
-	grunt.registerTask('prod', ['imagemin:prod', 'sass:prod', 'copy:prod', 'autoprefixer:prod', 'replace:prod']);
+	grunt.registerTask('default', [
+		'imagemin:dev',
+		'sass:dev',
+		'copy:dev',
+		'copy:mighty',
+		'autoprefixer:dev',
+		'replace:dev',
+		'uglify:dev'
+	]);
+
+	grunt.registerTask('prod', [
+		'imagemin:prod',
+		'sass:prod', 'copy:prod',
+		'autoprefixer:prod',
+		'replace:prod',
+		'uglify:prod'
+	]);
 
 	grunt.registerTask('watch-serve', ['default', 'php', 'watch']);
 
