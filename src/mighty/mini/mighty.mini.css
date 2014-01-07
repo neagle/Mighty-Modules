@@ -105,7 +105,6 @@
 .mighty-mini .cards-list.highlight .card {
 	animation-name: mighty-highlight;
 	animation-duration: 1s;
-	animation-iteration-count: infinite;
 }
 
 .mighty-mini .pull-left {
@@ -226,6 +225,17 @@
   border-top: solid 1px #e2e2e2;
   padding-top: 10px;
 }
+
+.card .card-meta-alone .card-meta-end {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    right: auto;
+    top: auto;
+}
+.card .card-meta-alone .card-meta-end .card-ago {
+    float: right;
+}
 .card .card-meta .icon-chevron {
   margin-left: 10px;
   margin-top: 7px;
@@ -301,6 +311,7 @@
 }
 .card .card-image,
 .card .card-video-poster {
+  cursor: pointer;
   height: 200px;
   background-size: cover;
   background-repeat: no-repeat;
