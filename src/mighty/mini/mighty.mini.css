@@ -313,7 +313,8 @@
 .card .card-video-poster {
   cursor: pointer;
   height: 200px;
-  background-size: cover;
+  background-color: #000;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   position: relative;

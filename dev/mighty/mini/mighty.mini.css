@@ -346,8 +346,9 @@
 .card .card-video-poster {
   cursor: pointer;
   height: 200px;
-  -webkit-background-size: cover;
-  background-size: cover;
+  background-color: #000;
+  -webkit-background-size: contain;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   position: relative;

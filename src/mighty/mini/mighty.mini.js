@@ -212,8 +212,10 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
                 renderVideo(video);
             }
 
+            // TODO: Why doesn't core.delegate capture click events on descendants?
             core.delegate(ui.cardsList, '.card-play', 'click', playVideo);
             core.delegate(ui.cardsList, '.card-video-poster', 'click', playVideo);
+            core.delegate(ui.cardsList, '.icon-play', 'click', playVideo);
 
 			if (options.auto_refresh) {
 				setInterval(getCards, options.auto_refresh_interval);
